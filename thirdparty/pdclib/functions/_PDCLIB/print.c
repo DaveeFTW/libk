@@ -43,6 +43,7 @@
    n - pointer to maximum number of characters to be delivered in this call
    s - the buffer into which the character shall be delivered
 */
+#if 0
 #define PUT( x ) \
 do { \
     int character = x; \
@@ -54,7 +55,19 @@ do { \
     } \
     ++(status->i); \
 } while ( 0 )
+#endif
 
+#define PUT( x ) \
+do { \
+    int character = x; \
+    if ( status->i < status->n ) { \
+        if ( status->stream != NULL ) \
+            character = 0; \
+        else \
+            status->s[status->i] = character; \
+    } \
+    ++(status->i); \
+} while ( 0 )
 
 static void intformat( intmax_t value, struct _PDCLIB_status_t * status )
 {
@@ -416,7 +429,7 @@ const char * _PDCLIB_print( const char * spec, struct _PDCLIB_status_t * status 
         /* TODO: Check for invalid flag combinations. */
         if ( status->flags & E_unsigned )
         {
-            uintmax_t value;
+            uintmax_t value = 0;
             switch ( status->flags & ( E_char | E_short | E_long | E_llong | E_size ) )
             {
                 case E_char:
