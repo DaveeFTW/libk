@@ -425,4 +425,4 @@ int * _PDCLIB_errno_func( void );
 #define _PDCLIB_EMAX 7
 
 /* TODO: Doing this via a static array is not the way to do it. */
-char const * _PDCLIB_errno_texts[ _PDCLIB_EMAX ];
+extern char const * _PDCLIB_errno_texts[ _PDCLIB_EMAX ];
