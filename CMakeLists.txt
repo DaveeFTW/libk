@@ -25,6 +25,11 @@ install(FILES
 	DESTINATION include/libk
 )
 
+install(FILES
+	${CMAKE_SOURCE_DIR}/mep-toolchain.cmake
+	DESTINATION share
+)
+
 install(TARGETS k
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
