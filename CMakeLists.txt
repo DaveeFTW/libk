@@ -20,7 +20,7 @@ install(FILES
 	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_glue.h 
 	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_int.h
 	${CMAKE_SOURCE_DIR}/include/_PDCLIB_config.h
-	DESTINATION include/libk
+	DESTINATION include
 )
 
 install(TARGETS k
