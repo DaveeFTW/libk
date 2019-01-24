@@ -159,7 +159,7 @@ add_library(libk_objs OBJECT
 	${LIBK_SOURCES}
 )
 
-add_library(k $<TARGET_OBJECTS:libk_objs>)
+add_library(c $<TARGET_OBJECTS:libk_objs>)
 
 install(FILES
 	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_aux.h 
@@ -182,7 +182,7 @@ install(FILES
 	DESTINATION include
 )
 
-install(TARGETS k
+install(TARGETS c
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
