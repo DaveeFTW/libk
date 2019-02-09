@@ -64,6 +64,7 @@ set(PDCLIB_STDIO_SOURCES
 	"${PDCLIB_DIR}/functions/stdio/perror.c"
 	"${PDCLIB_DIR}/functions/stdio/printf.c"
 	"${PDCLIB_DIR}/functions/stdio/puts.c"
+	"${PDCLIB_DIR}/functions/stdio/putc.c"
 	"${PDCLIB_DIR}/functions/stdio/rename.c"
 	"${PDCLIB_DIR}/functions/stdio/rewind.c"
 	"${PDCLIB_DIR}/functions/stdio/scanf.c"
@@ -137,7 +138,6 @@ set(PDCLIB_STRING_SOURCES
 )
 
 set(LIBK_SOURCES
-	"${CMAKE_SOURCE_DIR}/src/io.c"
 	"${CMAKE_SOURCE_DIR}/src/fillbuffer.c"
 	"${CMAKE_SOURCE_DIR}/src/flushbuffer.c"
 	"${CMAKE_SOURCE_DIR}/src/close.c"
@@ -148,6 +148,7 @@ set(LIBK_SOURCES
 	"${CMAKE_SOURCE_DIR}/src/allocpages.c"
 	"${CMAKE_SOURCE_DIR}/src/_Exit.c"
 	"${CMAKE_SOURCE_DIR}/src/tmpfile.c"
+	"${CMAKE_SOURCE_DIR}/src/stdinit.c"
 )
 
 include_directories(${PDCLIB_DIR}/include)

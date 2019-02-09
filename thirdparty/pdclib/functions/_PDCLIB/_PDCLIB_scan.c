@@ -115,7 +115,7 @@ static int IN_SCANSET( const char * scanlist, const char * end_scanlist, int rc 
 const char * _PDCLIB_scan( const char * spec, struct _PDCLIB_status_t * status )
 {
     /* generic input character */
-    int rc;
+    int rc = 0;
     const char * prev_spec;
     const char * orig_spec = spec;
     int value_parsed;
