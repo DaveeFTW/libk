@@ -166,34 +166,34 @@ add_library(libk_objs OBJECT
 	${LIBK_SOURCES}
 )
 
-add_library(k $<TARGET_OBJECTS:libk_objs>)
+add_library(c $<TARGET_OBJECTS:libk_objs>)
 
 install(FILES
-	${CMAKE_SOURCE_DIR}/include/libk/assert.h
-	${CMAKE_SOURCE_DIR}/include/libk/ctype.h
-	${CMAKE_SOURCE_DIR}/include/libk/errno.h
-	${CMAKE_SOURCE_DIR}/include/libk/inttypes.h
-	${CMAKE_SOURCE_DIR}/include/libk/iso646.h
-	${CMAKE_SOURCE_DIR}/include/libk/limits.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdarg.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdbool.h
-	${CMAKE_SOURCE_DIR}/include/libk/stddef.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdint.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdio.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdlib.h
-	${CMAKE_SOURCE_DIR}/include/libk/string.h
-	DESTINATION include/libk
+	${CMAKE_SOURCE_DIR}/include/assert.h
+	${CMAKE_SOURCE_DIR}/include//ctype.h
+	${CMAKE_SOURCE_DIR}/include/errno.h
+	${CMAKE_SOURCE_DIR}/include/inttypes.h
+	${CMAKE_SOURCE_DIR}/include/iso646.h
+	${CMAKE_SOURCE_DIR}/include/limits.h
+	${CMAKE_SOURCE_DIR}/include/stdarg.h
+	${CMAKE_SOURCE_DIR}/include/stdbool.h
+	${CMAKE_SOURCE_DIR}/include/stddef.h
+	${CMAKE_SOURCE_DIR}/include/stdint.h
+	${CMAKE_SOURCE_DIR}/include/stdio.h
+	${CMAKE_SOURCE_DIR}/include/stdlib.h
+	${CMAKE_SOURCE_DIR}/include/string.h
+	DESTINATION include
 )
 
 install(FILES
-	${CMAKE_SOURCE_DIR}/include/libk/pdclib/_PDCLIB_aux.h 
-	${CMAKE_SOURCE_DIR}/include/libk/pdclib/_PDCLIB_glue.h 
-	${CMAKE_SOURCE_DIR}/include/libk/pdclib/_PDCLIB_int.h
+	${CMAKE_SOURCE_DIR}/include/pdclib/_PDCLIB_aux.h 
+	${CMAKE_SOURCE_DIR}/include/pdclib/_PDCLIB_glue.h 
+	${CMAKE_SOURCE_DIR}/include/pdclib/_PDCLIB_int.h
 	${CMAKE_SOURCE_DIR}/include/pdclib/_PDCLIB_config.h
-	DESTINATION include/libk/pdclib
+	DESTINATION include/pdclib
 )
 
-install(TARGETS k
+install(TARGETS c
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
