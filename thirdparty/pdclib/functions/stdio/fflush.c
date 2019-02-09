@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fflush( FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -9,7 +7,8 @@
 #include <stdio.h>
 
 #ifndef REGTEST
-#include <_PDCLIB_glue.h>
+
+#include "pdclib/_PDCLIB_glue.h"
 
 extern struct _PDCLIB_file_t * _PDCLIB_filelist;
 
@@ -17,9 +16,9 @@ int fflush( struct _PDCLIB_file_t * stream )
 {
     if ( stream == NULL )
     {
+        int rc = 0;
         stream = _PDCLIB_filelist;
         /* TODO: Check what happens when fflush( NULL ) encounters write errors, in other libs */
-        int rc = 0;
         while ( stream != NULL )
         {
             if ( stream->status & _PDCLIB_FWRITE )
@@ -38,11 +37,12 @@ int fflush( struct _PDCLIB_file_t * stream )
         return _PDCLIB_flushbuffer( stream );
     }
 }
-                
+
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -51,4 +51,3 @@ int main( void )
 }
 
 #endif
-

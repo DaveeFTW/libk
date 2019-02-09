@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* ftell( FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -44,7 +42,8 @@ long int ftell( struct _PDCLIB_file_t * stream )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <stdlib.h>
 
@@ -99,4 +98,3 @@ int main( void )
 }
 
 #endif
-

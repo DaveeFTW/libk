@@ -1,5 +1,3 @@
-﻿$Id$
-
 Credits
 =======
 
@@ -34,8 +32,11 @@ giving other valuable hints, thanks.
 Brian Damgaard, for a very friendly exchange over the fine details of the
 Quicksort algorithm and its implementation in PDCLib, thanks.
 
-Rink Springer, for very precise bug reports including patches, and a heads-up
-on the capabilities of PDCLib when I most needed it, thanks.
+Rink Springer, for very precise bug reports including patches, a heads-up on
+the capabilities of PDCLib when I most needed it, and for pushing me back in
+the driver's seat, thanks.
+
+Giovanni Mascellani, for his finding a bug in the strto*l() functions.
 
 Everyone involved in the first, "public" attempt at PDCLib, for bearing with me
 when I restarted from scratch, thanks.
@@ -64,10 +65,6 @@ obsessive when it comes to coding style. ;-)
   This is to make it easier to distinguish between what the standard dictates
   and what I added to make PDCLib work.
 
-- Any internal includes (i.e. those not specified by the standard) have their
-  header guards defined in the *including* file, for a tiny bit of compile-time
-  performance.
-
 - I always try to minimize the use of local variables. Wherever possible I used
   parameters passed by-value directly, and deferred declaration of locals to the
   innermost block of statements, in hopes that it might reduce memory footprint
@@ -92,8 +89,6 @@ obsessive when it comes to coding style. ;-)
   standard, and you will probably use your compiler builtins (through a platform
   overlay) anyhow.
 
-- Every file has an Id tag, so that it is on file for *every* code file.
-
 - PDCLib code has no bias towards POSIX; indeed the absence of POSIX tidbits is
   one of its hallmarks. However, PDCLib also has no bias *against* POSIX, and
   when one platform abstraction is as good as another, I chose the POSIX one for
@@ -109,4 +104,3 @@ obsessive when it comes to coding style. ;-)
   hopefully keeping overly ambitious editors from repeating my mistakes. The
   header files especially should be self-documenting to the point of being a
   suitable replacement for any library reference book you might be using.
-

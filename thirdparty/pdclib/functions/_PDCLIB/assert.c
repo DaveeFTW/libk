@@ -1,6 +1,4 @@
-/* $Id$ */
-
-/* _PDCLIB_assert( char const * )
+/* _PDCLIB_assert( const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
    Permission is granted to use, modify, and / or redistribute at will.
@@ -12,31 +10,28 @@
 
 #ifndef REGTEST
 
-#ifndef _PDCLIB_AUX_H
-#define _PDCLIB_AUX_H _PDCLIB_AUX_H
-#include <_PDCLIB_aux.h>
-#endif
+#include "pdclib/_PDCLIB_aux.h"
 
-#if _PDCLIB_C_VERSION == 99
-void _PDCLIB_assert( char const * const message1, char const * const function, char const * const message2 )
+void _PDCLIB_assert99( const char * const message1, const char * const function, const char * const message2 )
 {
     fputs( message1, stderr );
     fputs( function, stderr );
     fputs( message2, stderr );
     abort();
 }
-#else
-void _PDCLIB_assert( char const * const message )
+
+void _PDCLIB_assert89( const char * const message )
 {
     fputs( message, stderr );
     abort();
 }
-#endif
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
 #include <signal.h>
 
 static int EXPECTED_ABORT = 0;
@@ -49,6 +44,7 @@ static void aborthandler( int sig )
 }
 
 #define NDEBUG
+
 #include <assert.h>
 
 static int disabled_test( void )
@@ -60,6 +56,7 @@ static int disabled_test( void )
 }
 
 #undef NDEBUG
+
 #include <assert.h>
 
 int main( void )

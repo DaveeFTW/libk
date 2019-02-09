@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fwrite( const void *, size_t, size_t, FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -7,30 +5,32 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 
 #ifndef REGTEST
 
-#include <_PDCLIB_glue.h>
-
-#include <stdbool.h>
-#include <string.h>
+#include "pdclib/_PDCLIB_glue.h"
 
 size_t fwrite( const void * _PDCLIB_restrict ptr, size_t size, size_t nmemb, struct _PDCLIB_file_t * _PDCLIB_restrict stream )
 {
+    _PDCLIB_size_t offset = 0;
+    /* TODO: lineend */
+    /* int lineend = 0; */
+    size_t nmemb_i;
     if ( _PDCLIB_prepwrite( stream ) == EOF )
     {
         return 0;
     }
-    _PDCLIB_size_t offset = 0;
-    size_t nmemb_i;
     for ( nmemb_i = 0; nmemb_i < nmemb; ++nmemb_i )
     {
-        for ( size_t size_i = 0; size_i < size; ++size_i )
+        size_t size_i;
+        for ( size_i = 0; size_i < size; ++size_i )
         {
             if ( ( stream->buffer[ stream->bufidx++ ] = ((char*)ptr)[ nmemb_i * size + size_i ] ) == '\n' )
             {
                 /* Remember last newline, in case we have to do a partial line-buffered flush */
                 offset = stream->bufidx;
+                /* lineend = true; */
             }
             if ( stream->bufidx == stream->bufsize )
             {
@@ -39,6 +39,7 @@ size_t fwrite( const void * _PDCLIB_restrict ptr, size_t size, size_t nmemb, str
                     /* Returning number of objects completely buffered */
                     return nmemb_i;
                 }
+                /* lineend = false; */
             }
         }
     }
@@ -80,7 +81,8 @@ size_t fwrite( const void * _PDCLIB_restrict ptr, size_t size, size_t nmemb, str
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -89,4 +91,3 @@ int main( void )
 }
 
 #endif
-

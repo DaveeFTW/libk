@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* strtol( const char *, char * *, int )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -34,7 +32,8 @@ long int strtol( const char * s, char ** endptr, int base )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <errno.h>
 
@@ -65,6 +64,10 @@ int main( void )
     TESTCASE( strtol( tricky, &endptr, 8 ) == 0 );
     TESTCASE( endptr == tricky + 2 );
     /* errno should still be 0 */
+    TESTCASE( errno == 0 );
+    /* correctly decoding zero */
+    TESTCASE( strtol( "0", &endptr, 0 ) == 0 );
+    TESTCASE( *endptr == '\0' );
     TESTCASE( errno == 0 );
     /* overflowing subject sequence must still return proper endptr */
     TESTCASE( strtol( overflow, &endptr, 36 ) == LONG_MIN );

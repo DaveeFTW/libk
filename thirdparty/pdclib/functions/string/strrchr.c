@@ -1,6 +1,4 @@
-/* $Id$ */
-
-/* strrchr( const char *, int c )
+/* strrchr( const char *, int )
 
    This file is part of the Public Domain C Library (PDCLib).
    Permission is granted to use, modify, and / or redistribute at will.
@@ -27,7 +25,8 @@ char * strrchr( const char * s, int c )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -38,4 +37,5 @@ int main( void )
     TESTCASE( strrchr( abccd, 'c' ) == &abccd[3] );
     return TEST_RESULTS;
 }
+
 #endif

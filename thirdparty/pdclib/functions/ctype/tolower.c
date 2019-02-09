@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* tolower( int )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,19 +8,18 @@
 
 #ifndef REGTEST
 
+#include <locale.h>
+
 int tolower( int c )
 {
-    if ( ( c >= 'A' ) && ( c <= 'Z' ) )
-    {
-        c += ( 'a' - 'A' );
-    }
-    return c;
+    return _PDCLIB_lc_ctype.entry[c].lower;
 }
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -34,4 +31,5 @@ int main( void )
     TESTCASE( tolower( '[' ) == '[' );
     return TEST_RESULTS;
 }
+
 #endif

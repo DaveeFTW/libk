@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* void * realloc( void *, size_t )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -46,7 +44,8 @@ void * realloc( void * ptr, size_t size )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -55,4 +54,3 @@ int main( void )
 }
 
 #endif
-

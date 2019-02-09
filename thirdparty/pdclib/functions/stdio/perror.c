@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* perror( const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -7,10 +5,10 @@
 */
 
 #include <stdio.h>
+#include <errno.h>
+#include <locale.h>
 
 #ifndef REGTEST
-
-#include <errno.h>
 
 /* TODO: Doing this via a static array is not the way to do it. */
 void perror( const char * s )
@@ -19,14 +17,23 @@ void perror( const char * s )
     {
         fprintf( stderr, "%s: ", s );
     }
-    fprintf( stderr, "%s\n", _PDCLIB_errno_texts[ errno ] );
+    if ( errno >= _PDCLIB_ERRNO_MAX )
+    {
+        fprintf( stderr, "Unknown error\n" );
+    }
+    else
+    {
+        fprintf( stderr, "%s\n", _PDCLIB_lc_messages.errno_texts[errno] );
+    }
     return;
 }
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>

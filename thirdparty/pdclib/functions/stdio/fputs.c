@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fputs( const char *, FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -9,7 +7,8 @@
 #include <stdio.h>
 
 #ifndef REGTEST
-#include <_PDCLIB_glue.h>
+
+#include "pdclib/_PDCLIB_glue.h"
 
 int fputs( const char * _PDCLIB_restrict s, struct _PDCLIB_file_t * _PDCLIB_restrict stream )
 {
@@ -46,17 +45,20 @@ int fputs( const char * _PDCLIB_restrict s, struct _PDCLIB_file_t * _PDCLIB_rest
 }
 
 #endif
+
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
-    char const * const message = "SUCCESS testing fputs()";
+    const char * const message = "SUCCESS testing fputs()";
     FILE * fh;
+    size_t i;
     TESTCASE( ( fh = tmpfile() ) != NULL );
     TESTCASE( fputs( message, fh ) >= 0 );
     rewind( fh );
-    for ( size_t i = 0; i < 23; ++i )
+    for ( i = 0; i < 23; ++i )
     {
         TESTCASE( fgetc( fh ) == message[i] );
     }
@@ -65,4 +67,3 @@ int main( void )
 }
 
 #endif
-

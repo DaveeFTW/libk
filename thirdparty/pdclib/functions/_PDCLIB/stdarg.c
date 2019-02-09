@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* stdarg
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,7 +8,9 @@
 #include <limits.h>
 #include <float.h>
 
-#include <_PDCLIB_test.h>
+#ifdef TEST
+
+#include "_PDCLIB_test.h"
 
 typedef int (*intfunc_t)( void );
 
@@ -111,3 +111,5 @@ int main( void )
     test( TAG_INTPTR, &x, TAG_LDBLPTR, &d, TAG_FUNCPTR, dummy, TAG_END );
     return TEST_RESULTS;
 }
+
+#endif

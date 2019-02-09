@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fgets( char *, int, FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,11 +8,11 @@
 
 #ifndef REGTEST
 
-#define _PDCLIB_GLUE_H _PDCLIB_GLUE_H
-#include <_PDCLIB_glue.h>
+#include "pdclib/_PDCLIB_glue.h"
 
 char * fgets( char * _PDCLIB_restrict s, int size, struct _PDCLIB_file_t * _PDCLIB_restrict stream )
 {
+    char * dest = s;
     if ( size == 0 )
     {
         return NULL;
@@ -28,7 +26,6 @@ char * fgets( char * _PDCLIB_restrict s, int size, struct _PDCLIB_file_t * _PDCL
     {
         return NULL;
     }
-    char * dest = s;
     while ( ( ( *dest++ = stream->buffer[stream->bufidx++] ) != '\n' ) && --size > 0 )
     {
         if ( stream->bufidx == stream->bufend )
@@ -50,14 +47,16 @@ char * fgets( char * _PDCLIB_restrict s, int size, struct _PDCLIB_file_t * _PDCL
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
 #include <string.h>
 
 int main( void )
 {
     FILE * fh;
     char buffer[10];
-    char const * fgets_test = "foo\nbar\0baz\nweenie";
+    const char * fgets_test = "foo\nbar\0baz\nweenie";
     TESTCASE( ( fh = fopen( testfile, "wb+" ) ) != NULL );
     TESTCASE( fwrite( fgets_test, 1, 18, fh ) == 18 );
     rewind( fh );
@@ -87,4 +86,3 @@ int main( void )
 }
 
 #endif
-

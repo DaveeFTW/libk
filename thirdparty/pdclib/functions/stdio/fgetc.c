@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fgetc( FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,7 +8,7 @@
 
 #ifndef REGTEST
 
-#include <_PDCLIB_glue.h>
+#include "pdclib/_PDCLIB_glue.h"
 
 int fgetc( struct _PDCLIB_file_t * stream )
 {
@@ -28,7 +26,8 @@ int fgetc( struct _PDCLIB_file_t * stream )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {

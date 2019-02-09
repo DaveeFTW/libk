@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fclose( FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,7 +8,8 @@
 #include <stdlib.h>
 
 #ifndef REGTEST
-#include <_PDCLIB_glue.h>
+
+#include "pdclib/_PDCLIB_glue.h"
 
 extern struct _PDCLIB_file_t * _PDCLIB_filelist;
 
@@ -48,6 +47,11 @@ int fclose( struct _PDCLIB_file_t * stream )
             {
                 remove( stream->filename );
             }
+            /* Free user buffer (SetVBuf allocated) */
+            if ( stream->status & _PDCLIB_FREEBUFFER )
+            {
+                free( stream->buffer );
+            }
             /* Free stream */
             if ( ! ( stream->status & _PDCLIB_STATIC ) )
             {
@@ -58,14 +62,15 @@ int fclose( struct _PDCLIB_file_t * stream )
         previous = current;
         current = current->next;
     }
-    _PDCLIB_errno = _PDCLIB_EIO;
+    _PDCLIB_errno = _PDCLIB_EBADF;
     return -1;
 }
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -81,7 +86,7 @@ int main( void )
     TESTCASE( _PDCLIB_filelist == file2 );
     TESTCASE( fclose( file2 ) == 0 );
     TESTCASE( _PDCLIB_filelist == file1 );
-    TESTCASE( ( file2 = fopen( testfile1, "w" ) ) != NULL );
+    TESTCASE( ( file2 = fopen( testfile2, "w" ) ) != NULL );
     TESTCASE( _PDCLIB_filelist == file2 );
     TESTCASE( fclose( file1 ) == 0 );
     TESTCASE( _PDCLIB_filelist == file2 );
@@ -96,4 +101,3 @@ int main( void )
 }
 
 #endif
-

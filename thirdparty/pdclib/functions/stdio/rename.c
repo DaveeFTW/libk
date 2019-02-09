@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* rename( const char *, const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -9,7 +7,8 @@
 #include <stdio.h>
 
 #ifndef REGTEST
-#include <_PDCLIB_glue.h>
+
+#include "pdclib/_PDCLIB_glue.h"
 
 #include <string.h>
 
@@ -33,7 +32,8 @@ int rename( const char * old, const char * new )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <stdlib.h>
 
@@ -82,4 +82,3 @@ int main( void )
 }
 
 #endif
-

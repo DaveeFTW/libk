@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* scanf( const char *, ... )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -24,7 +22,7 @@ int scanf( const char * _PDCLIB_restrict format, ... )
 #define _PDCLIB_FILEID "stdio/scanf.c"
 #define _PDCLIB_FILEIO
 
-#include <_PDCLIB_test.h>
+#include "_PDCLIB_test.h"
 
 #define testscanf( stream, format, ... ) scanf( format, __VA_ARGS__ )
 

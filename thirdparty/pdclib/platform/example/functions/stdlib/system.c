@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* system( const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -17,7 +15,8 @@ extern int wait( int * status );
 
 int system( const char * string )
 {
-    char const * const argv[] = { "sh", "-c", (char const * const)string, NULL };
+    const char * argv[] = { "sh", "-c", NULL, NULL };
+    argv[2] = string;
     if ( string != NULL )
     {
         int pid = fork();
@@ -34,7 +33,8 @@ int system( const char * string )
 }
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #define SHELLCOMMAND "echo 'SUCCESS testing system()'"
 

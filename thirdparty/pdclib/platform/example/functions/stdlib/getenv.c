@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* getenv( const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -34,7 +32,8 @@ char * getenv( const char * name )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {

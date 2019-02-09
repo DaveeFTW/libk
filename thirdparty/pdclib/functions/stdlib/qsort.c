@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* qsort( void *, size_t, size_t, int(*)( const void *, const void * ) )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -19,7 +17,7 @@
 */
 
 /* Wrapper for _PDCLIB_memswp protects against multiple argument evaluation. */
-static inline void memswp( char * i, char * j, size_t size )
+static _PDCLIB_inline void memswp( char * i, char * j, size_t size )
 {
     _PDCLIB_memswp( i, j, size );
 }
@@ -35,7 +33,7 @@ static inline void memswp( char * i, char * j, size_t size )
 #define PUSH( base, limit ) stackptr[0] = base; stackptr[1] = limit; stackptr += 2
 #define POP( base, limit ) stackptr -= 2; base = stackptr[0]; limit = stackptr[1]
 /* TODO: Stack usage is log2( nmemb ) (minus what T shaves off the worst case).
-         Worst-case nmemb is platform dependent and should probably be 
+         Worst-case nmemb is platform dependent and should probably be
          configured through _PDCLIB_config.h.
 */
 #define STACKSIZE 64
@@ -130,7 +128,9 @@ void qsort( void * base, size_t nmemb, size_t size, int (*compar)( const void *,
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
 #include <string.h>
 #include <limits.h>
 
@@ -154,7 +154,7 @@ int main( void )
     strcpy( s, presort );
     qsort( s, 1, 1, compare );
     TESTCASE( strcmp( s, presort ) == 0 );
-#if __BSD_VISIBLE
+#if defined( REGTEST ) && ( defined( __BSD_VISIBLE ) || defined( __APPLE__ ) )
     puts( "qsort.c: Skipping test #4 for BSD as it goes into endless loop here." );
 #else
     qsort( s, 100, 0, compare );

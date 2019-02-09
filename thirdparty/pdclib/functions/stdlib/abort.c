@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* abort( void )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -7,18 +5,21 @@
 */
 
 #include <stdlib.h>
+#include <signal.h>
 
 #ifndef REGTEST
 
 void abort( void )
 {
+    raise( SIGABRT );
     exit( EXIT_FAILURE );
 }
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <stdio.h>
 

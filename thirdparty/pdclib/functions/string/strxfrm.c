@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* strxfrm( char *, const char *, size_t )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,7 +8,8 @@
 
 #ifndef REGTEST
 
-/* TODO: Dummy function, no locale support yet. */
+#include <locale.h>
+
 size_t strxfrm( char * _PDCLIB_restrict s1, const char * _PDCLIB_restrict s2, size_t n )
 {
     size_t len = strlen( s2 );
@@ -19,7 +18,9 @@ size_t strxfrm( char * _PDCLIB_restrict s1, const char * _PDCLIB_restrict s2, si
         /* Cannot use strncpy() here as the filling of s1 with '\0' is not part
            of the spec.
         */
-        while ( n-- && ( *s1++ = *s2++ ) );
+        /* FIXME: The code below became invalid when we started doing *real* locales... */
+        /*while ( n-- && ( *s1++ = _PDCLIB_lc_collate[(unsigned char)*s2++].collation ) );*/
+        while ( n-- && ( *s1++ = (unsigned char)*s2++ ) );
     }
     return len;
 }
@@ -27,7 +28,8 @@ size_t strxfrm( char * _PDCLIB_restrict s1, const char * _PDCLIB_restrict s2, si
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -44,5 +46,5 @@ int main( void )
     TESTCASE( s[10] == '\0' );
     return TEST_RESULTS;
 }
-#endif
 
+#endif

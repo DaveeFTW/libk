@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* strncmp( const char *, const char *, size_t )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -12,13 +10,13 @@
 
 int strncmp( const char * s1, const char * s2, size_t n )
 {
-    while ( *s1 && n && ( *s1 == *s2 ) )
+    while ( n && *s1 && ( *s1 == *s2 ) )
     {
         ++s1;
         ++s2;
         --n;
     }
-    if ( ( n == 0 ) )
+    if ( n == 0 )
     {
         return 0;
     }
@@ -31,7 +29,8 @@ int strncmp( const char * s1, const char * s2, size_t n )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -51,4 +50,5 @@ int main( void )
     TESTCASE( strncmp( abcde, cmpabcd_, 10 ) < 0 );
     return TEST_RESULTS;
 }
+
 #endif

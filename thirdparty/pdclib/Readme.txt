@@ -1,50 +1,41 @@
-$Id$
-
 PDCLib - Public Domain C Library
 ================================
 
 License
 -------
 
-Permission is granted to use, modify, and / or redistribute at will.
+PDCLib is distributed unter the Creative Commons CC0 License. You
+should have received a copy of the full legal text of this license
+as part of this distribution (COPYING.CC0). It is also available at
 
-This includes removing authorship notices, re-use of code parts in
-other software (with or without giving credit), and / or creating a
-commercial product based on it.
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
 
-This permission is not revocable by the author.
+The following is a human-readable summary of that license.
 
-This software is provided as-is. Use it at your own risk. There is
-no warranty whatsoever, neither expressed nor implied, and by using
-this software you accept that the author(s) shall not be held liable
-for any loss of data, loss of service, or other damages, be they
-incidental or consequential. Your only option other than accepting
-this is not to use the software at all.
+                       No Copyright
 
-A case for Public Domain
-------------------------
+The person who associated a work with this deed has dedicated the
+work to the public domain by waiving all of his or her rights to
+the work worldwide under copyright law, including all related and
+neighboring rights, to the extent allowed by law.
 
-There was a time when you could just post a piece of code to usenet
-and say, "I give it away for free; perhaps it's useful for you."
+You can copy, modify, distribute and perform the work, even for
+commercial purposes, all without asking permission. See Other
+Information below.
 
-Then came the lawyers.
+                    Other Information
 
-There are building blocks in software engineering that are so basic
-that everyone should have free access to them without having to
-employ a complete legal department for advice. They should be FREE.
-Available for free, free of licensing implications, free of attached
-propaganda, free of everything but their useful self.
+In no way are the patent or trademark rights of any person affected
+by CC0, nor are the rights that other persons may have in the work
+or in how the work is used, such as publicity or privacy rights.
 
-Today, even the term "free" has to be defined by several paragraphs
-of legal blah-blah.
+Unless expressly stated otherwise, the person who associated a work
+with this deed makes no warranties about the work, and disclaims
+liability for all uses of the work, to the fullest extent permitted
+by applicable law.
 
-Sick and tired of it, the author brought you this piece of software
-under a "license" that should not be neccessary in the first place:
-"Free" should have been enough.
-
-Unfortunately, German law does not even *allow* to declare a work to
-be "in the Public Domain", so the "free for all" license I intended
-had to be made expressively.
+When using or citing the work, you should not imply endorsement by
+the author or the affirmer.
 
 What is it
 ----------
@@ -75,15 +66,11 @@ PDCLib consists of several parts:
 5) platform-specific implementation files;
 6) platform-specific, optimized "overlay" implementations (optional).
 
-The standard headers (in ./includes/) only contain what they are
+The standard headers (in ./include/) only contain what they are
 defined to contain. Where additional logic or macro magic is
 necessary, that is deferred to the internal files. This has been done
 so that the headers are actually educational as to what they provide
 (as opposed to how the library does it).
-
-Note that there *might* be some feature to remove this additional
-level of indirection for a production release, to ease the workload
-put on the preprocessor.
 
 There is a seperate implementation file (in ./function/{header}/) for
 every function defined by the standard, named {function}.c. Not only
@@ -94,13 +81,13 @@ but a single function, it also allows the optimization overlay to work
 (The directory ./functions/_PDCLIB/ contains internal and helper
 functions that are not part of the standard.)
 
-Then there are internal header files (in ./internal/), which contain
-all the "black magic" and "code fu" that was kept out of the standard
-headers. You should not have to touch them if you want to adapt PDCLib
-to a new platform. Note that, if you *do* have to touch them, I would
-consider it a serious design flaw, and would be happy to fix it in the
-next PDCLib release. Any adaption work should be covered by the steps
-detailed below.
+Then there are internal header files (in ./include/pdclib/), which
+contain all the "black magic" and "code fu" that was kept out of the
+standard headers. You should not have to touch them if you want to
+adapt PDCLib to a new platform. Note that, if you *do* have to touch
+them, I would consider it a serious design flaw, and would be happy
+to fix it in the next PDCLib release. Any adaption work should be
+covered by the steps detailed below.
 
 For adapting PDCLib to a new platform (the trinity of CPU, operating
 system, and compiler), make a copy of ./platform/example/ named
@@ -150,6 +137,10 @@ the overlay for your platform over the PDCLib source tree structure.
 Development Status
 ------------------
 
+Note that pre-v1.0 "releases" are internal milestones only, and that
+you are strongly encouraged to use the latest source snapshot at all
+times.
+
 v0.1 - 2004-12-12
 Freestanding-only C99 implementation without any overlay, and missing
 the INTN_C() / UINTN_C() macros. <float.h> still has the enquire.c
@@ -190,28 +181,3 @@ Still no locale / wide-char support. Enabled all GCC compiler warnings I
 could find, and fixed everything that threw a warning. (You see this,
 maintainers of Open Source software? No warnings whatsoever. Stop telling
 me it cannot be done.) Fixed all known bugs in the v0.4 release.
-
-
-A WORD ON THE v0.5 RELEASE
-==========================
-
-The v0.5 release is not well-tested. There are several things in it done
-in a way that I would never label "release quality". Some things are not
-even in the *structure* I would like them to be. An example for this is
-the current handling of errno values: It needlessly introduces dependency
-on PDCLib (because I use non-standard values), and the values are placed
-in the wrong header (_PDCLIB_int.h instead of _PDCLIB_glue.h where they
-would be more appropriate).
-
-But at some point during the development toward the v0.5 release, I found
-that my current PDCLib work schedule simply does not allow me to wait
-until every piece of <stdio.h> is as I would like it to be. It would
-probably take another year or two, and my patience is UP.
-
-I want this released, and I want to think about something else but
-<stdio.h> for some time.
-
-So, expect significant change to how stdio is done in upcoming releases.
-Everything *WILL* be stable by the time v1.0 comes around, but until then
-you will have to accept that I can only deliver "hobby quality" for now.
-

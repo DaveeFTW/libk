@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fwrite( void *, size_t, size_t, FILE * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -7,25 +5,24 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 
 #ifndef REGTEST
 
-#include <_PDCLIB_glue.h>
-
-#include <stdbool.h>
-#include <string.h>
+#include "pdclib/_PDCLIB_glue.h"
 
 size_t fread( void * _PDCLIB_restrict ptr, size_t size, size_t nmemb, struct _PDCLIB_file_t * _PDCLIB_restrict stream )
 {
+    char * dest = (char *)ptr;
+    size_t nmemb_i;
     if ( _PDCLIB_prepread( stream ) == EOF )
     {
         return 0;
     }
-    char * dest = (char *)ptr;
-    size_t nmemb_i;
     for ( nmemb_i = 0; nmemb_i < nmemb; ++nmemb_i )
     {
-        for ( size_t size_i = 0; size_i < size; ++size_i )
+        size_t size_i;
+        for ( size_i = 0; size_i < size; ++size_i )
         {
             if ( stream->bufidx == stream->bufend )
             {
@@ -44,12 +41,13 @@ size_t fread( void * _PDCLIB_restrict ptr, size_t size, size_t nmemb, struct _PD
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
     FILE * fh;
-    char const * message = "Testing fwrite()...\n";
+    const char * message = "Testing fwrite()...\n";
     char buffer[21];
     buffer[20] = 'x';
     TESTCASE( ( fh = tmpfile() ) != NULL );
@@ -81,4 +79,3 @@ int main( void )
 }
 
 #endif
-

@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* atexit( void (*)( void ) )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,18 +8,18 @@
 
 #ifndef REGTEST
 
-extern void (*_PDCLIB_regstack[])( void );
-extern size_t _PDCLIB_regptr;
+extern void (*_PDCLIB_exitstack[])( void );
+extern size_t _PDCLIB_exitptr;
 
 int atexit( void (*func)( void ) )
 {
-    if ( _PDCLIB_regptr == 0 )
+    if ( _PDCLIB_exitptr == 0 )
     {
         return -1;
     }
     else
     {
-        _PDCLIB_regstack[ --_PDCLIB_regptr ] = func;
+        _PDCLIB_exitstack[ --_PDCLIB_exitptr ] = func;
         return 0;
     }
 }
@@ -29,7 +27,9 @@ int atexit( void (*func)( void ) )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
 #include <assert.h>
 
 static int flags[ 32 ];
@@ -43,7 +43,8 @@ static void counthandler( void )
 
 static void checkhandler( void )
 {
-    for ( int i = 0; i < 31; ++i )
+    int i;
+    for ( i = 0; i < 31; ++i )
     {
         assert( flags[ i ] == i );
     }
@@ -51,8 +52,9 @@ static void checkhandler( void )
 
 int main( void )
 {
+    int i;
     TESTCASE( atexit( &checkhandler ) == 0 );
-    for ( int i = 0; i < 31; ++i )
+    for ( i = 0; i < 31; ++i )
     {
         TESTCASE( atexit( &counthandler ) == 0 );
     }

@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* void free( void * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,10 +8,7 @@
 
 #ifndef REGTEST
 
-#ifndef _PDCLIB_INT_H
-#define _PDCLIB_INT_H _PDCLIB_INT_H
-#include <_PDCLIB_int.h>
-#endif
+#include "pdclib/_PDCLIB_int.h"
 
 /* TODO: Primitive placeholder. Much room for improvement. */
 
@@ -22,6 +17,10 @@ extern struct _PDCLIB_headnode_t _PDCLIB_memlist;
 
 void free( void * ptr )
 {
+    if ( ptr == NULL )
+    {
+        return;
+    }
     ptr = (void *)( (char *)ptr - sizeof( struct _PDCLIB_memnode_t ) );
     ( (struct _PDCLIB_memnode_t *)ptr )->next = NULL;
     if ( _PDCLIB_memlist.last != NULL )
@@ -38,11 +37,15 @@ void free( void * ptr )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
+
+#include <stdbool.h>
 
 int main( void )
 {
-    /* tests covered in malloc test driver */
+    free( NULL );
+    TESTCASE( true );
     return TEST_RESULTS;
 }
 

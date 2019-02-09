@@ -1,6 +1,4 @@
-/* $Id$ */
-
-/* vsnprintf( char *, size_t, const char *, va_list ap )
+/* vsnprintf( char *, size_t, const char *, va_list )
 
    This file is part of the Public Domain C Library (PDCLib).
    Permission is granted to use, modify, and / or redistribute at will.
@@ -22,7 +20,7 @@ int vsnprintf( char * _PDCLIB_restrict s, size_t n, const char * _PDCLIB_restric
     status.current = 0;
     status.s = s;
     status.width = 0;
-    status.prec = 0;
+    status.prec = EOF;
     status.stream = NULL;
     va_copy( status.arg, arg );
 
@@ -32,7 +30,12 @@ int vsnprintf( char * _PDCLIB_restrict s, size_t n, const char * _PDCLIB_restric
         if ( ( *format != '%' ) || ( ( rc = _PDCLIB_print( format, &status ) ) == format ) )
         {
             /* No conversion specifier, print verbatim */
-            s[ status.i++ ] = *(format++);
+            if ( status.i < n )
+            {
+                s[ status.i ] = *format;
+            }
+            status.i++;
+            format++;
         }
         else
         {
@@ -40,7 +43,10 @@ int vsnprintf( char * _PDCLIB_restrict s, size_t n, const char * _PDCLIB_restric
             format = rc;
         }
     }
-    s[ status.i ] = '\0';
+    if ( status.i  < n )
+    {
+        s[ status.i ] = '\0';
+    }
     va_end( status.arg );
     return status.i;
 }
@@ -50,8 +56,9 @@ int vsnprintf( char * _PDCLIB_restrict s, size_t n, const char * _PDCLIB_restric
 #ifdef TEST
 #define _PDCLIB_FILEID "stdio/vsnprintf.c"
 #define _PDCLIB_STRINGIO
-
-#include <_PDCLIB_test.h>
+#include <stdint.h>
+#include <stddef.h>
+#include "_PDCLIB_test.h"
 
 static int testprintf( char * s, const char * format, ... )
 {
@@ -71,4 +78,3 @@ int main( void )
 }
 
 #endif
-

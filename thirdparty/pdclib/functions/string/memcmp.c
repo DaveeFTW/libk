@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* memcmp( const void *, const void *, size_t )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -29,15 +27,17 @@ int memcmp( const void * s1, const void * s2, size_t n )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
-    char const xxxxx[] = "xxxxx";
+    const char xxxxx[] = "xxxxx";
     TESTCASE( memcmp( abcde, abcdx, 5 ) < 0 );
     TESTCASE( memcmp( abcde, abcdx, 4 ) == 0 );
     TESTCASE( memcmp( abcde, xxxxx, 0 ) == 0 );
     TESTCASE( memcmp( xxxxx, abcde, 1 ) > 0 );
     return 0;
 }
+
 #endif

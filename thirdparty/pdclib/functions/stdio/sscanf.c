@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* sscanf( const char *, const char *, ... )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -27,11 +25,11 @@ int sscanf( const char * _PDCLIB_restrict s, const char * _PDCLIB_restrict forma
 #define _PDCLIB_FILEID "stdio/sscanf.c"
 #define _PDCLIB_STRINGIO
 
-#include <_PDCLIB_test.h>
+#include "_PDCLIB_test.h"
 
 #define testscanf( s, format, ... ) sscanf( s, format, __VA_ARGS__ )
 
-int main()
+int main( void )
 {
     char source[100];
 #include "scanf_testcases.h"
@@ -39,4 +37,3 @@ int main()
 }
 
 #endif
-

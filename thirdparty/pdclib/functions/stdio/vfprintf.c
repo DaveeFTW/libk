@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* vfprintf( FILE *, const char *, va_list )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -23,7 +21,7 @@ int vfprintf( struct _PDCLIB_file_t * _PDCLIB_restrict stream, const char * _PDC
     status.current = 0;
     status.s = NULL;
     status.width = 0;
-    status.prec = 0;
+    status.prec = EOF;
     status.stream = stream;
     va_copy( status.arg, arg );
 
@@ -51,8 +49,8 @@ int vfprintf( struct _PDCLIB_file_t * _PDCLIB_restrict stream, const char * _PDC
 #ifdef TEST
 #define _PDCLIB_FILEID "stdio/vfprintf.c"
 #define _PDCLIB_FILEIO
-
-#include <_PDCLIB_test.h>
+#include <stddef.h>
+#include "_PDCLIB_test.h"
 
 static int testprintf( FILE * stream, const char * format, ... )
 {

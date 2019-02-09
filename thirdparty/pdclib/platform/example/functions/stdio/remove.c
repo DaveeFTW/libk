@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* remove( const char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -35,29 +33,8 @@ int remove( const char * pathname )
     }
     if ( ( rc = unlink( pathname ) ) == -1 )
     {
-        switch ( errno )
-        {
-            /* These are the values possible on a Linux machine. Adapt the
-               values and their mapping to PDCLib errno values at will. (This
-               is an example implementation, so we keep it very simple.)
-            */
-            case EACCES:
-            case EFAULT:
-            case EIO:
-            case EISDIR:
-            case ELOOP:
-            case ENAMETOOLONG:
-            case ENOENT:
-            case ENOMEM:
-            case ENOTDIR:
-            case EPERM:
-            case EROFS:
-                _PDCLIB_errno = _PDCLIB_EIO;
-                break;
-            default:
-                _PDCLIB_errno = _PDCLIB_EUNKNOWN;
-                break;
-        }
+        /* The 1:1 mapping in _PDCLIB_config.h ensures this works. */
+        _PDCLIB_errno = errno;
     }
     return rc;
 }
@@ -65,7 +42,8 @@ int remove( const char * pathname )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {
@@ -74,4 +52,3 @@ int main( void )
 }
 
 #endif
-

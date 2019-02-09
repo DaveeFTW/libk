@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* raise( int )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -23,7 +21,7 @@ extern void (*_PDCLIB_sigterm)( int );
 int raise( int sig )
 {
     void (*sighandler)( int );
-    char const * message;
+    const char * message;
     switch ( sig )
     {
         case SIGABRT:
@@ -70,7 +68,8 @@ int raise( int sig )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <stdlib.h>
 
@@ -111,4 +110,5 @@ int main( void )
     TESTCASE( flag == 1 );
     return TEST_RESULTS;
 }
+
 #endif

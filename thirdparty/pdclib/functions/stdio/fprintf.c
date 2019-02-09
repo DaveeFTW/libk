@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* fprintf( FILE *, const char *, ... )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -24,12 +22,14 @@ int fprintf( struct _PDCLIB_file_t * _PDCLIB_restrict stream, const char * _PDCL
 #endif
 
 #ifdef TEST
+#include <stdint.h>
+#include <stddef.h>
 #define _PDCLIB_FILEID "stdio/fprintf.c"
 #define _PDCLIB_FILEIO
 
-#include <_PDCLIB_test.h>
+#include "_PDCLIB_test.h"
 
-#define testprintf( stream, format, ... ) fprintf( stream, format, __VA_ARGS__ )
+#define testprintf( stream, ... ) fprintf( stream, __VA_ARGS__ )
 
 int main( void )
 {
@@ -41,4 +41,3 @@ int main( void )
 }
 
 #endif
-

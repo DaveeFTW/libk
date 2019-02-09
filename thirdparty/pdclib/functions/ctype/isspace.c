@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* isspace( int )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -7,30 +5,21 @@
 */
 
 #include <ctype.h>
-#include <stdbool.h>
 
 #ifndef REGTEST
 
+#include <locale.h>
+
 int isspace( int c )
 {
-    switch ( c )
-    {
-        case ' ':
-        case '\f':
-        case '\n':
-        case '\r':
-        case '\t':
-        case '\v':
-            return true;
-        default:
-            return false;
-    }
+    return ( _PDCLIB_lc_ctype.entry[c].flags & _PDCLIB_CTYPE_SPACE );
 }
 
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 int main( void )
 {

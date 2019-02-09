@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* tmpnam( char * )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -10,8 +8,9 @@
 
 #ifndef REGTEST
 
+#include "pdclib/_PDCLIB_glue.h"
+
 #include <string.h>
-#include <_PDCLIB_glue.h>
 
 char * tmpnam( char * s )
 {
@@ -29,7 +28,8 @@ char * tmpnam( char * s )
 #endif
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+
+#include "_PDCLIB_test.h"
 
 #include <string.h>
 
@@ -40,4 +40,3 @@ int main( void )
 }
 
 #endif
-

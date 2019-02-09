@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* void * malloc( size_t )
 
    This file is part of the Public Domain C Library (PDCLib).
@@ -8,14 +6,10 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 #ifndef REGTEST
 
-#ifndef _PDCLIB_GLUE_H
-#define _PDCLIB_GLUE_H _PDLIB_GLUE_H
-#include <_PDCLIB_glue.h>
-#endif
+#include "pdclib/_PDCLIB_glue.h"
 
 /* TODO: Primitive placeholder. Much room for improvement. */
 
@@ -76,7 +70,7 @@ void * malloc( size_t size )
     /* No exact fit; go for first fit */
     if ( firstfit != NULL )
     {
-        bool node_split = false;
+        int node_split = 0;
         if ( ( firstfit->size - size ) > ( _PDCLIB_MINALLOC + sizeof( struct _PDCLIB_memnode_t ) ) )
         {
             /* Oversized - split into two nodes */
@@ -85,7 +79,7 @@ void * malloc( size_t size )
             newnode->next = firstfit->next;
             firstfit->next = newnode;
             firstfit->size = firstfit->size - newnode->size - sizeof( struct _PDCLIB_memnode_t );
-            node_split = true;
+            node_split = 1;
         }
         if ( firstfit_previous != NULL )
         {
@@ -150,7 +144,7 @@ void * malloc( size_t size )
 
 
 #ifdef TEST
-#include <_PDCLIB_test.h>
+#include "_PDCLIB_test.h"
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -165,19 +159,19 @@ void * malloc( size_t size )
 #define MEMTEST( ptr, size ) ( ( ptr = malloc( size ) ) != NULL ) && ( memset( ptr, 0, size ) == ptr )
 
 char * pages_start = 0;
-int test_nodes( char const * const, int, ... );
-void PRINT( char const * const, ... );
+int test_nodes( const char * const, int, ... );
+void PRINT( const char * const, ... );
 
 /* This can be enabled to give a dump of node information */
 #if 0
-void PRINT( char const * const format, ... )
+void PRINT( const char * const format, ... )
 {
     va_list( ap );
     va_start( ap, format );
     vprintf( format, ap );
 }
 #else
-void PRINT( char const * const format, ... )
+void PRINT( const char * const format, ... )
 {
     /* EMPTY */
 }
@@ -186,13 +180,13 @@ void PRINT( char const * const format, ... )
 /* Helper function checking number of allocated memory pages and the nodes
    in the free memory list against expectations.
 */
-int test_nodes( char const * const action, int expected_pages, ... )
+int test_nodes( const char * const action, int expected_pages, ... )
 {
     static int count = 1;
     int result = 1;
-    PRINT( action );
     /* Determining the amount of allocated pages */
     int allocated_pages = ( (intptr_t)_PDCLIB_allocpages( 0 ) - (intptr_t)pages_start ) / _PDCLIB_PAGESIZE;
+    PRINT( action );
     PRINT( "Test #%2d, %d allocated pages", count++, allocated_pages );
     if ( allocated_pages != expected_pages )
     {
@@ -203,19 +197,20 @@ int test_nodes( char const * const action, int expected_pages, ... )
     {
         PRINT( "\n" );
     }
+    {
     /* Now moving through the free nodes list */
     va_list( ap );
-    va_start( ap, expected_pages );
     struct _PDCLIB_memnode_t * tracer = _PDCLIB_memlist.first;
     int firstnode = 0;
     int lastnode = 0;
+    va_start( ap, expected_pages );
     while ( tracer != NULL )
     {
+        /* Expected data */
+        size_t expected_location = va_arg( ap, size_t );
         /* Data from node */
         size_t node_location = (char *)tracer - (char *)pages_start;
         PRINT( "   - node %.4p, size %#.4x", node_location, tracer->size );
-        /* Expected data */
-        size_t expected_location = va_arg( ap, size_t );
         if ( expected_location == 0 )
         {
             PRINT( " - UNEXPECTED NODE\n" );
@@ -228,6 +223,7 @@ int test_nodes( char const * const action, int expected_pages, ... )
             firstnode = expected_location;
         }
         lastnode = expected_location;
+        {
         /* Comparing expected node against current node */
         size_t expected_size = va_arg( ap, size_t );
         if ( ( node_location != expected_location ) || ( tracer->size != expected_size ) )
@@ -239,13 +235,14 @@ int test_nodes( char const * const action, int expected_pages, ... )
         {
             PRINT( "\n" );
         }
+        }
         tracer = tracer->next;
     }
     /* Comparing first and last node in memlist against expectations. */
     PRINT( "   - memlist first: %#.4x - last: %#.4x",
             ( _PDCLIB_memlist.first == NULL ) ? NULL : (char *)_PDCLIB_memlist.first - (char *)pages_start,
             ( _PDCLIB_memlist.last == NULL ) ? NULL : (char *)_PDCLIB_memlist.last - (char *)pages_start );
-    if ( ( firstnode != 0 ) && 
+    if ( ( firstnode != 0 ) &&
          ( ( ( (char *)_PDCLIB_memlist.first - (char *)pages_start ) != firstnode )
          || ( ( (char *)_PDCLIB_memlist.last  - (char *)pages_start ) != lastnode ) ) )
     {
@@ -256,11 +253,12 @@ int test_nodes( char const * const action, int expected_pages, ... )
     {
         PRINT( "\n" );
     }
+    }
     PRINT( "\n" );
     return result;
 }
 
-#endif 
+#endif
 
 /* Note that this test driver heavily tests *internals* of the implementation
    above (and of free() and realloc(), too). That means that changes in the
@@ -275,7 +273,7 @@ int main( void )
     void * ptr1, * ptr2, * ptr3, * ptr4, * ptr5, * ptr6, * ptr7, * ptr8, * ptr9, * ptrA, * ptrB, * ptrC;
 
     pages_start = _PDCLIB_allocpages( 0 );
-    PRINT( "\nEffective is: %#.4x\nsizeof( memnode ) is: %#.2x\n\n", EFFECTIVE, sizeof( struct _PDCLIB_memnode_t ) ); 
+    PRINT( "\nEffective is: %#.4x\nsizeof( memnode ) is: %#.2x\n\n", EFFECTIVE, sizeof( struct _PDCLIB_memnode_t ) );
 
     /* Allocating 10 bytes; expecting one page allocation and a node split */
     TESTCASE( MEMTEST( ptr1, 10 ) );
