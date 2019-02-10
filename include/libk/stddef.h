@@ -13,14 +13,20 @@ extern "C" {
 
 #include "pdclib/_PDCLIB_int.h"
 
+#ifndef _PDCLIB_PTRDIFF_T_DEFINED
+#define _PDCLIB_PTRDIFF_T_DEFINED
 typedef _PDCLIB_ptrdiff_t ptrdiff_t;
+#endif
 
 #ifndef _PDCLIB_SIZE_T_DEFINED
 #define _PDCLIB_SIZE_T_DEFINED _PDCLIB_SIZE_T_DEFINED
 typedef _PDCLIB_size_t size_t;
 #endif
 
+#ifndef _PDCLIB_WCHAR_DEFINED
+#define _PDCLIB_WCHAR_DEFINED
 typedef _PDCLIB_wchar_t   wchar_t;
+#endif
 
 #ifndef _PDCLIB_NULL_DEFINED
 #define _PDCLIB_NULL_DEFINED _PDCLIB_NULL_DEFINED
