@@ -162,22 +162,22 @@ add_library(libk_objs OBJECT
 add_library(c $<TARGET_OBJECTS:libk_objs>)
 
 install(FILES
-	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_aux.h 
-	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_glue.h 
-	${CMAKE_SOURCE_DIR}/include/libk/_PDCLIB_int.h
-	${CMAKE_SOURCE_DIR}/include/libk/assert.h
-	${CMAKE_SOURCE_DIR}/include/libk/ctype.h
-	${CMAKE_SOURCE_DIR}/include/libk/errno.h
-	${CMAKE_SOURCE_DIR}/include/libk/inttypes.h
-	${CMAKE_SOURCE_DIR}/include/libk/iso646.h
-	${CMAKE_SOURCE_DIR}/include/libk/limits.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdarg.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdbool.h
-	${CMAKE_SOURCE_DIR}/include/libk/stddef.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdint.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdio.h
-	${CMAKE_SOURCE_DIR}/include/libk/stdlib.h
-	${CMAKE_SOURCE_DIR}/include/libk/string.h
+	${PDCLIB_DIR}/internals/_PDCLIB_aux.h 
+	${PDCLIB_DIR}/internals/_PDCLIB_glue.h 
+	${PDCLIB_DIR}/internals/_PDCLIB_int.h
+	${PDCLIB_DIR}/includes/assert.h
+	${PDCLIB_DIR}/includes/ctype.h
+	${PDCLIB_DIR}/includes/errno.h
+	${PDCLIB_DIR}/includes/inttypes.h
+	${PDCLIB_DIR}/includes/iso646.h
+	${PDCLIB_DIR}/includes/limits.h
+	${PDCLIB_DIR}/includes/stdarg.h
+	${PDCLIB_DIR}/includes/stdbool.h
+	${PDCLIB_DIR}/includes/stddef.h
+	${PDCLIB_DIR}/includes/stdint.h
+	${PDCLIB_DIR}/includes/stdio.h
+	${PDCLIB_DIR}/includes/stdlib.h
+	${PDCLIB_DIR}/includes/string.h
 	${CMAKE_SOURCE_DIR}/include/_PDCLIB_config.h
 	DESTINATION include
 )
