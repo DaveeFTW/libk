@@ -213,10 +213,10 @@ install(FILES
 	${CMAKE_SOURCE_DIR}/include/libk/stdlib.h
 	${CMAKE_SOURCE_DIR}/include/libk/string.h
 	${CMAKE_SOURCE_DIR}/include/_PDCLIB_config.h
-	DESTINATION include/libk
+	DESTINATION $ENV{VITASDK}/arm-vita-eabi/include/libk
 )
 
 install(TARGETS k
-	LIBRARY DESTINATION lib
-	ARCHIVE DESTINATION lib
+	LIBRARY DESTINATION $ENV{VITASDK}/arm-vita-eabi/lib
+	ARCHIVE DESTINATION $ENV{VITASDK}/arm-vita-eabi/lib
 )
