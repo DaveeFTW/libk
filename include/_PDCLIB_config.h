@@ -214,13 +214,11 @@ struct _PDCLIB_imaxdiv_t
 */
 
 /* Internal helper macro. va_round is not part of <stdarg.h>. */
-#define _PDCLIB_va_round( type ) ( (sizeof(type) + sizeof(void *) - 1) & ~(sizeof(void *) - 1) )
-
-typedef char * _PDCLIB_va_list;
-#define _PDCLIB_va_arg( ap, type ) ( (ap) += (_PDCLIB_va_round(type)), ( *(type*) ( (ap) - (_PDCLIB_va_round(type)) ) ) )
-#define _PDCLIB_va_copy( dest, src ) ( (dest) = (src), (void)0 )
-#define _PDCLIB_va_end( ap ) ( (ap) = (void *)0, (void)0 )
-#define _PDCLIB_va_start( ap, parmN ) ( (ap) = (char *) &parmN + ( _PDCLIB_va_round(parmN) ), (void)0 )
+typedef __builtin_va_list _PDCLIB_va_list;
+#define _PDCLIB_va_arg( ap, type ) ( __builtin_va_arg( ap, type ) )
+#define _PDCLIB_va_copy( dest, src ) ( __builtin_va_copy( dest, src ) )
+#define _PDCLIB_va_end( ap ) ( __builtin_va_end( ap ) )
+#define _PDCLIB_va_start( ap, parmN ) ( __builtin_va_start( ap, parmN ) )
 
 /* -------------------------------------------------------------------------- */
 /* OS "glue", part 1                                                          */
