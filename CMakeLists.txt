@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
 # TODO: replace with toolchain
 set(CMAKE_SYSTEM_NAME "Generic")
@@ -59,3 +59,4 @@ install(TARGETS k
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
+
